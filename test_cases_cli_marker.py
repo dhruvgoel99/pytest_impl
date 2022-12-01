@@ -2,6 +2,10 @@ import unittest
 import paramiko
 import pytest
 import datetime
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+mylogger = logging.getLogger()
 
 output_file = 'vm_details.txt'
 timestamp = str(datetime.datetime.now())
@@ -14,6 +18,7 @@ class TestSimpleWidget(unittest.TestCase):
     	self.ssh = paramiko.SSHClient()
     	self.ssh.load_system_host_keys()
     	self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    	mylogger.info('Connecting to the Guest VM')
     	self.ssh.connect(hostname='192.168.234.129', username='dhruv', password='root', port=22)
         
     #test cases goes here with 'test' prefix
@@ -23,6 +28,7 @@ class TestSimpleWidget(unittest.TestCase):
     def test_cpu_num(self):
     	## number of CPUs
     	stdin, stdout, stderr = self.ssh.exec_command('lscpu | grep -e ^CPU\(s\)')
+    	mylogger.info('Get Number of CPUs from the VM')
     	out = stdout.readline().split()
     	self.assertEqual(out[-1],'2')
     	self.out = timestamp+' CPU_NUM: '+out[-1]+'\n'
@@ -30,6 +36,7 @@ class TestSimpleWidget(unittest.TestCase):
     def test_mem_avail(self):
     	## memory available: if  more than 50%
     	stdin, stdout, stderr = self.ssh.exec_command('free -m | grep Mem:')
+    	mylogger.warning('Memory availability')
     	out = stdout.readline().split()
     	self.assertGreaterEqual(out[-1],str(0.5*int(out[1])))
     	self.out = timestamp+' MEM_AVAIL: '+out[-1]+'\n'
@@ -37,6 +44,7 @@ class TestSimpleWidget(unittest.TestCase):
     def test_cpu_idle(self):
     	## CPU %idle: if more than 90%
     	stdin, stdout, stderr = self.ssh.exec_command('sudo apt install sysstat; mpstat | grep -e .[0-9]$')
+    	mylogger.info('CPU Idle%')
     	out = stdout.readline().split()
     	self.assertGreaterEqual(float(out[-1]),90)
     	self.out = timestamp+' CPU_IDLE: '+out[-1]+'\n'
