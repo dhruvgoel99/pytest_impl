@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('install') {
       steps{
-        sh 'printf "admin\n" | sudo -S apt install python3'
+        sh 'printf "root\n" | sudo -S apt install python3'
       }
         }
     stage('requirements and report') {
