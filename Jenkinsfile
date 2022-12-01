@@ -2,10 +2,17 @@
 pipeline {
   agent any
   stages {
-    stage('install') {
-      steps {
-        sh 'sudo apt install python3 -S admin'
-      }
+    stage('build') {
+      agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }
+            steps {
+                sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+                stash(name: 'compiled-results', includes: 'sources/*.py*')
+            }
+        }
     }
     stage('requirements and report') {
       steps {
