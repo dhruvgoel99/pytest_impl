@@ -17,3 +17,6 @@ pytest --html=report.html
 ## artifacts in jenkins
 
 ![Screenshot](artifacts/screenshot1.png)
+
+
+Have a look to report and VM_details.txt, in artifacts
