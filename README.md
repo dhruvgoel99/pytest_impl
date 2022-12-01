@@ -2,7 +2,7 @@
 
 ## access marker testcase
 
-pytest -v -m <marker-name>
+pytest -v -m "marker-name"
 
 ## access html report
   
