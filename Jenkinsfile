@@ -12,7 +12,6 @@ pipeline {
                 stash(name: 'compiled-results', includes: 'sources/*.py*')
             }
         }
-    }
     stage('requirements and report') {
       steps {
         sh 'pip3 install -r requirements.txt'
