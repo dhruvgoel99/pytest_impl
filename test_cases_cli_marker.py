@@ -12,9 +12,9 @@ class TestSimpleWidget(unittest.TestCase):
     def setUp(self):
     	self.out = None
     	self.ssh = paramiko.SSHClient()
-    	self.ssh.load_system_host_keys()
+        self.ssh.load_system_host_keys()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    	self.ssh.connect(hostname='192.168.234.129', username='dhruv', password='root', port=22)
+        self.ssh.connect(hostname='192.168.234.129', username='dhruv', password='root', port=22)
         
     #test cases goes here with 'test' prefix
     # run this marked testcase: (pytest -v -m "cli")
