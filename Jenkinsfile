@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('install') {
       steps {
-        sh 'sudo apt install python3'
+        sh 'sudo apt install python3 -S admin'
       }
     }
     stage('requirements and report') {
